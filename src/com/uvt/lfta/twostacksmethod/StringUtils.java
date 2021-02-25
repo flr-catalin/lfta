@@ -1,4 +1,4 @@
-package com.uvt.lfta;
+package com.uvt.lfta.twostacksmethod;
 
 /**
  * Utility class for working with strings.

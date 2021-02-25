@@ -1,4 +1,4 @@
-package com.uvt.lfta;
+package com.uvt.lfta.twostacksmethod;
 
 /**
  * Class for storing operator information.

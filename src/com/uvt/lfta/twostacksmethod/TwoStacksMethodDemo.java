@@ -1,4 +1,4 @@
-package com.uvt.lfta;
+package com.uvt.lfta.twostacksmethod;
 
 /**
  * Demo class for the two stacks method.

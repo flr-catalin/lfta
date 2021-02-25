@@ -1,4 +1,4 @@
-package com.uvt.lfta;
+package com.uvt.lfta.twostacksmethod;
 
 import java.util.ArrayList;
 import java.util.List;
