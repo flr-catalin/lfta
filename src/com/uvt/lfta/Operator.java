@@ -1,30 +1,45 @@
 package com.uvt.lfta;
 
+/**
+ * Class for storing operator information.
+ * 
+ * @author Catalin Florea
+ */
 public class Operator {
 
+	/** The operator's symbol. */
 	private String symbol;
 	
+	/** The operator's priority. */
 	private int priority;
 	
+	/**
+	 * Public constructor.
+	 */
 	public Operator(String symbol, int priority) {
 		this.symbol = symbol;
 		this.priority = priority;
 	}
 
+	/**
+	 * @return the symbol
+	 */
 	public String getSymbol() {
 		return symbol;
 	}
 
-	public void setSymbol(String symbol) {
-		this.symbol = symbol;
-	}
-
+	/**
+	 * @return the priority
+	 */
 	public int getPriority() {
 		return priority;
 	}
 
-	public void setPriority(int priority) {
-		this.priority = priority;
+	/**
+	 * @param priority the amount to add
+	 */
+	public void addPriority(int priority) {
+		this.priority += priority;
 	}
 	
 }
