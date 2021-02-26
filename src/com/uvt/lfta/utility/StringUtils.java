@@ -1,10 +1,9 @@
-package com.uvt.lfta.twostacksmethod;
+package com.uvt.lfta.utility;
 
 /**
  * Utility class for working with strings.
  * 
  * @author Catalin Florea
- *
  */
 public class StringUtils {
 

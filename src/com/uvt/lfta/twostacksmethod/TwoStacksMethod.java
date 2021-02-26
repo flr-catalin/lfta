@@ -1,7 +1,13 @@
 package com.uvt.lfta.twostacksmethod;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+
+import com.uvt.lfta.utility.ExpressionTokenizer;
+import com.uvt.lfta.utility.Operator;
+import com.uvt.lfta.utility.OperatorStore;
+import com.uvt.lfta.utility.StringUtils;
 
 /**
  * Implementation of the two stacks method.
@@ -22,14 +28,18 @@ public class TwoStacksMethod {
 	/** The current paranthesis priority modifier. */
 	private int paranthesisPriority;
 	
+	/** The order of evaluation. */
+	private List<String> orderOfEvaluation;
+	
 	/**
 	 * Public constructor. 
 	 */
 	public TwoStacksMethod(OperatorStore operatorStore) {
-		this.operatorStack = new Stack<Operator>();
-		this.operandStack = new Stack<String>();
+		this.operatorStack = new Stack<>();
+		this.operandStack = new Stack<>();
 		this.operatorStore = operatorStore;
 		this.paranthesisPriority = 0;
+		this.orderOfEvaluation = new ArrayList<>();
 	}
 
 	/**
@@ -37,7 +47,7 @@ public class TwoStacksMethod {
 	 * 
 	 * @param expression the expression to run the method against.
 	 */
-	public void execute(String expression) {
+	public List<String> execute(String expression) {
 		// tokenize the expression
 		List<String> tokenizedExpression = ExpressionTokenizer.tokenize(expression, operatorStore);
 		
@@ -61,20 +71,27 @@ public class TwoStacksMethod {
 				// add the paranthesis priority
 				operator.addPriority(paranthesisPriority);
 				
-				// while there is a higher priority operator in the stack, remove it and apply the operator to the last two operands
+				// while there is a higher priority operator in the stack, remove it 
+				// and apply the operator to the last two operands
 				while (!isHigherPriority(operator) && operandStack.size() > 1) {
-					operandStack.add(getNewOperand());
+					Operator firstOperator = operatorStack.pop();
+					String firstOperand = operandStack.pop();
+					String secondOperand = operandStack.pop();
+					
+					String newOperand = getNewOperand(firstOperator, firstOperand, secondOperand);
+					orderOfEvaluation.add(newOperand);
+					operandStack.add(newOperand);
 				}
 				
 				// finally add the new operator
-				System.out.println("Operatorul " + operator.getSymbol() + " cu prioritatea " + operator.getPriority() + " a ajuns in stiva.");
 				operatorStack.add(operator);
 			} else {
 				// operands always go in the stack
-				System.out.println("Operandul " + token + " a ajuns in stiva.");
 				operandStack.add(token);
 			}
 		}
+		
+		return orderOfEvaluation;
 	}
 
 	/**
@@ -98,15 +115,11 @@ public class TwoStacksMethod {
 	 * @return the highest priority
 	 */
 	private int getHighestPriority() {
-		int highestPriority = -1;
-		
-		for (Operator operator : operatorStack) {
-			if (operator.getPriority() > highestPriority) {
-				highestPriority = operator.getPriority();
-			}
+		if (operatorStack.isEmpty()) {
+			return -1;
 		}
 		
-		return highestPriority;
+		return operatorStack.peek().getPriority();
 	}
 	
 	/**
@@ -114,17 +127,12 @@ public class TwoStacksMethod {
 	 * 
 	 * @return the new operand
 	 */
-	private String getNewOperand() {
-		Operator pop = operatorStack.pop();
-		String lastOperand = operandStack.pop();
-		String secondLastOperand = operandStack.pop();
-		
-		System.out.println("Aplicam operatorul " + pop.getSymbol() + " operanzilor " + secondLastOperand + " si " + lastOperand);
+	private String getNewOperand(Operator firstOperator, String firstOperand, String secondOperand) {
 		StringBuilder stringBuilder = new StringBuilder();
 		
-		appendOperand(stringBuilder, secondLastOperand);
-		stringBuilder.append(pop.getSymbol());
-		appendOperand(stringBuilder, lastOperand);
+		appendOperand(stringBuilder, secondOperand);
+		stringBuilder.append(firstOperator.getSymbol());
+		appendOperand(stringBuilder, firstOperand);
 		
 		return stringBuilder.toString();
 	}
