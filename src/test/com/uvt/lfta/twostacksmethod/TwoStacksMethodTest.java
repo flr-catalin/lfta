@@ -33,6 +33,8 @@ public class TwoStacksMethodTest {
 	public void test_1() {
 		List<String> orderOfEvaluation = getOrderOfEvaluation("#m-n*t*x/v+k*r#");
 		
+		System.out.println("Expression: m-n*t*x/v+k*r");
+		
 		assertTrue("Was: " + CollectionUtils.size(orderOfEvaluation) + " Expected: " + "6",
 				CollectionUtils.isSize(orderOfEvaluation, 6));
 		
@@ -48,11 +50,17 @@ public class TwoStacksMethodTest {
 				StringUtils.isEqual(orderOfEvaluation.get(4), "k*r"));
 		assertTrue("Was: " + orderOfEvaluation.get(5) + " Expected: " + "(m-(((n*t)*x)/v))+(k*r)",
 				StringUtils.isEqual(orderOfEvaluation.get(5), "(m-(((n*t)*x)/v))+(k*r)"));
+		
+		System.out.println("Order of evaluation:");
+		orderOfEvaluation.stream().forEach(System.out::println);
+		System.out.println();
 	}
 	
 	@Test
 	public void test_2() {
 		List<String> orderOfEvaluation = getOrderOfEvaluation("#x-y*(z+q*o)/k#");
+		
+		System.out.println("Expression: x-y*(z+q*o)/k");
 		
 		assertTrue("Was: " + CollectionUtils.size(orderOfEvaluation) + " Expected: " + "5",
 				CollectionUtils.isSize(orderOfEvaluation, 5));
@@ -67,6 +75,10 @@ public class TwoStacksMethodTest {
 				StringUtils.isEqual(orderOfEvaluation.get(3), "(y*(z+(q*o)))/k"));
 		assertTrue("Was: " + orderOfEvaluation.get(4) + " Expected: " + "x-((y*(z+(q*o)))/k)",
 				StringUtils.isEqual(orderOfEvaluation.get(4), "x-((y*(z+(q*o)))/k)"));
+		
+		System.out.println("Order of evaluation:");
+		orderOfEvaluation.stream().forEach(System.out::println);
+		System.out.println();
 	}
 	
 	private List<String> getOrderOfEvaluation(String expression) {

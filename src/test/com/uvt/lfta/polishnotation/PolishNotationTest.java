@@ -29,24 +29,42 @@ public class PolishNotationTest {
 	public void test_1() {
 		String polishNotation = getPolishNotation("a+b");
 		
+		System.out.println("Expression: a+b");
+		
 		assertTrue("Was: " + polishNotation + " Expected: " + "ab+",
 				StringUtils.isEqual(polishNotation, "ab+"));
+		
+		System.out.print("Polish notation: ");
+		System.out.println(polishNotation);
+		System.out.println();
 	}
 	
 	@Test
 	public void test_2() {
 		String polishNotation = getPolishNotation("x*(y-z)");
 		
+		System.out.println("Expression: x*(y-z)");
+		
 		assertTrue("Was: " + polishNotation + " Expected: " + "xyz-*",
 				StringUtils.isEqual(polishNotation, "xyz-*"));
+		
+		System.out.print("Polish notation: ");
+		System.out.println(polishNotation);
+		System.out.println();
 	}
 	
 	@Test
 	public void test_3() {
 		String polishNotation = getPolishNotation("x*y/z-k/(b-c)*s");
 		
+		System.out.println("Expression: x*y/z-k/(b-c)*s");
+		
 		assertTrue("Was: " + polishNotation + " Expected: " + "xy*z/kbc-/s*-",
 				StringUtils.isEqual(polishNotation, "xy*z/kbc-/s*-"));
+		
+		System.out.print("Polish notation: ");
+		System.out.println(polishNotation);
+		System.out.println();
 	}
 	
 	private String getPolishNotation(String expression) {
